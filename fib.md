@@ -41,9 +41,9 @@ struct fib_table
 };
 ```
 
-​    每个fib_table结构在内核中表示一个路由表：
+*    每个fib_table结构在内核中表示一个路由表：
 
-​    ![img](https://p-blog.csdn.net/images/p_blog_csdn_net/rwen2012/d92b79eb163c48bbb4c0d57e58d1d887.jpg)+
+![img](https://raw.githubusercontent.com/liexusong/linux-source-code-analyze/master/images/network/fib-structs.jpg)
 
 图1
 
@@ -208,7 +208,7 @@ root@user]# ip route add 10.0.1.0/24 nexthop via 10.0.1.1  weight 1 nexthop via 
 
  
 
-![img](https://p-blog.csdn.net/images/p_blog_csdn_net/rwen2012/05f15e3d7c174f24b660dc2ad569e7f6.jpg)
+![img](https://raw.githubusercontent.com/liexusong/linux-source-code-analyze/master/images/network/ip-route.jpg)
 
 图 2
 
