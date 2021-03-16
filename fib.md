@@ -12,7 +12,7 @@
 struct fib_table *fib_tables[RT_TABLE_MAX+1]; // RT_TABLE_MAX 为255
 ```
 
-​    图1为一个路由表的总体结构。自上而下由左向右看，它首先为一个fib_table结构指针的数组，它被定义为：、
+​    图1为一个路由表的总体结构。自上而下由左向右看，它首先为一个fib_table结构指针的数组，它被定义为：
 
 ```c
 struct fib_table
