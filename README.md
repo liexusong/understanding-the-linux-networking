@@ -1,6 +1,6 @@
 # Understanding the Linux Networking
 
-> Base on Linux-2.4.0 version kernel
+> Base on Linux-2.4.0 kernel
 
 *  一、sk_buff 结构
 *  二、BSD层套接字
