@@ -3,7 +3,7 @@
 > Base on Linux-2.4.0 version kernel
 
 *  一、sk_buff 结构
-*  二、BSD层Sockt
+*  二、BSD层Socket
 *  三、网络接口设备
 *  四、邻居子系统
 *  五、ARP协议
