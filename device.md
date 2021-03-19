@@ -142,6 +142,37 @@ static void ei_receive(struct net_device *dev)
 
 当把数据包上送给内核网络协议栈后，数据包的处理就由内核接管。一般来说，内核网络协议栈会通过网络层的 `IP协议` 和传输层的 `TCP协议` 或者 `UDP协议` 来对数据包进行处理，处理完后就会把数据提交给应用层的进程进行处理。
 
+## 发送数据过程
 
+当网络协议栈需要通过网卡设备发送数据时，会调用 `net_device` 结构的 `hard_start_xmit` 方法，而对于 `NS8390网卡` 来说，`hard_start_xmit` 方法会被设置为 `ei_start_xmit` 函数。
 
+也就是说，使用 `NS8390网卡` 发送数据时，最终会调用 `ei_start_xmit` 函数将数据发送出去。我们来看看 `ei_start_xmit` 函数的实现：
 
+```c
+static int ei_start_xmit(struct sk_buff *skb, struct net_device *dev)
+{
+    ...
+    length = skb->len; // 数据包的长度
+    ...
+    disable_irq_nosync(dev->irq);      // 关闭硬件中断
+    spin_lock(&ei_local->page_lock);   // 对设备进行上锁, 避免多核CPU对设备的使用
+    ...
+    // 使用网卡驱动的发送接口把数据发送出去，skb->data 为数据包的数据部分
+    ei_block_output(dev, length, skb->data, ei_local->tx_start_page);
+    ...
+    spin_unlock(&ei_local->page_lock); // 对设备进行解锁
+    enable_irq(dev->irq);              // 打开硬件中断
+    ...
+    return 0;
+}
+```
+
+删减了硬件相关的操作后，`ei_start_xmit` 函数的实现就非常简单：
+
+*   首先关闭网卡的硬件中断，防止发送过程中受到硬件中断的干扰。
+*   调用 `ei_block_output` 函数把数据包的数据发送出去，此函数由网卡驱动实现，这里不作详细分析。
+*   打开网卡的硬件中断，让网卡能够继续通知内核。
+
+## 总结
+
+本文主要简单的介绍了网卡设备接收和发送数据包的过程，而网卡设备的初始化过程并没有涉及。当然网卡设备的初始化过程也非常重要，可能会在后面的文章继续分析。
