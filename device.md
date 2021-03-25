@@ -48,7 +48,7 @@ struct net_device
 
 **图1** 展示了网卡接收和发送数据的过程：
 
-![network-card](F:\codes\2.4.0\network-docs\images\network-card.png)
+![network-card](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/network-card.png)
 
 **图1** 网卡接收和发送数据过程
 
