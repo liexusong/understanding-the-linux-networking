@@ -10,7 +10,13 @@
 
 ![netfilter-hooks](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/netfilter-hooks.png)
 
-如上图所示，
+这 5 个位置的意义如下：
+
+* `PRE_ROUTING`：路由前
+* `LOCAL_IN`：进入本地
+* `FORWARD`：转发
+* `LOCAL_OUT`：本地输出
+* `POST_ROUTING`：路由后
 
 
 
