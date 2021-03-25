@@ -56,4 +56,24 @@ void dev_add_pack(struct packet_type *pt)
 
 从 `dev_add_pack` 函数的实现可知，内核把 `ptype_base` 数组当成了哈希表，而键值就是网络层协议类型，哈希函数就是对协议类型与 15 进行与操作。如果有冲突，就通过 `next` 指针把冲突的处理接口连接起来。
 
+我们再来看看 IP 协议是怎样注册处理接口的，如下代码：
+
+```c
+/* /net/ipv4/ip_output.c */
+
+static struct packet_type ip_packet_type = {
+     __constant_htons(ETH_P_IP),
+     NULL,
+     ip_rcv,  // 处理 IP 协议数据包的接口
+     (void*)1,
+     NULL,
+ };
+ 
+ void __init ip_init(void)
+{
+     // 注册 IP 协议处理接口
+     dev_add_pack(&ip_packet_type);
+     ...
+ }
+```
 
