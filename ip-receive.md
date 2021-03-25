@@ -20,3 +20,36 @@ struct packet_type
     struct packet_type  *next;
 };
 ```
+
+`ptype_base` 数组的定义如下：
+
+```c
+static struct packet_type *ptype_base[16];
+```
+
+从 `ptype_base` 数组的定义可知，其只有 16 个元素，那么如果内核超过 16 种网络层协议怎么办？我们可以从网络层处理接口的注册函数 `dev_add_pack` 中找到答案：
+
+```c
+void dev_add_pack(struct packet_type *pt)
+{
+    int hash;
+
+    br_write_lock_bh(BR_NETPROTO_LOCK);
+
+    // 如果类型为ETH_P_ALL, 表示需要处理所有协议的数据包
+    if (pt->type == htons(ETH_P_ALL)) { 
+        netdev_nit++;
+        pt->next = ptype_all;
+        ptype_all = pt;
+    } else {
+        // 对网络层协议类型与15进行与操作, 得到一个 0 到 15 的整数
+        hash = ntohs(pt->type) & 15;
+
+        // 通过 next 指针把冲突的处理接口连接起来
+        pt->next = ptype_base[hash];
+        ptype_base[hash] = pt;
+    }
+
+    br_write_unlock_bh(BR_NETPROTO_LOCK);
+}
+```
