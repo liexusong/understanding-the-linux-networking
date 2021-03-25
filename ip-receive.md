@@ -53,3 +53,7 @@ void dev_add_pack(struct packet_type *pt)
     br_write_unlock_bh(BR_NETPROTO_LOCK);
 }
 ```
+
+从 `dev_add_pack` 函数的实现可知，内核把 `ptype_base` 数组当成了哈希表，而键值就是网络层协议类型，哈希函数就是对协议类型与 15 进行与操作。如果有冲突，就通过 `next` 指针把冲突的处理接口连接起来。
+
+
