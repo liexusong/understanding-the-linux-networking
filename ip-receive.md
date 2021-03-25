@@ -78,3 +78,43 @@ static struct packet_type ip_packet_type = {
 ```
 
 从上面的代码可以看到，在 `ip_init` 函数中调用了 `dev_add_pack(&ip_packet_type)` 函数来注册了 IP 协议的处理接口，而 IP 协议的处理接口为 `ip_rcv` 函数。
+
+我们再看看 `net_rx_action` 函数的处理：
+
+```c
+static void net_rx_action(struct softirq_action *h)
+{
+    ...
+    for (;;) {
+        ...
+        {
+            struct packet_type *ptype, *pt_prev;
+            unsigned short type = skb->protocol; // 网络层协议类型
+ 
+            pt_prev = NULL;
+            ...
+            // 从 ptype_base 数组中查找网络层处理接口
+            for (ptype = ptype_base[ntohs(type) & 15]; 
+                 ptype; 
+                 ptype = ptype->next) 
+            {
+                if (ptype->type == type // 如果协议类型匹配
+                    && (!ptype->dev || ptype->dev == skb->dev))
+                {
+                    if (pt_prev) {
+                        atomic_inc(&skb->users);
+                        // 如处理IP协议数据包的 ip_rcv() 函数
+                        pt_prev->func(skb, skb->dev, pt_prev);
+                    }
+
+                    pt_prev = ptype;
+                }
+            }
+            ...
+        }
+        ...
+    }
+    ...
+    return;
+}
+```
