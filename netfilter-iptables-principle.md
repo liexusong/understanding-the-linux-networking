@@ -8,7 +8,7 @@
 
 `Netfilter` 主要通过向内核协议栈中不同的位置注册 `钩子函数` 来对数据包进行过滤或者修改操作，这些位置有 5 个，如下图所示：
 
-![]()
+![netfilter-hooks](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/netfilter-hooks.png)
 
 
 
