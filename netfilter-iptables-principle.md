@@ -12,7 +12,7 @@
 
 这 5 个位置的意义如下：
 
-* `PRE_ROUTING`：路由前
+* `PRE_ROUTING`：路由前，就是数据包进入内核协议栈，但还没有进行路由查找
 * `LOCAL_IN`：进入本地
 * `FORWARD`：转发
 * `LOCAL_OUT`：本地输出
