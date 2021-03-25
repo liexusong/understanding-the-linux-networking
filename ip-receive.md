@@ -118,3 +118,7 @@ static void net_rx_action(struct softirq_action *h)
     return;
 }
 ```
+
+现在就非常清晰了，就是根据数据包的网络层协议类型，然后从 `ptype_base` 数组中找到对应的处理接口处理数据包，如 IP 协议的数据包就调用 `ip_rcv` 函数处理。
+
+
