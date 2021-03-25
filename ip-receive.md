@@ -77,3 +77,4 @@ static struct packet_type ip_packet_type = {
  }
 ```
 
+从上面的代码可以看到，在 `ip_init` 函数中调用了 `dev_add_pack(&ip_packet_type)` 函数来注册了 IP 协议的处理接口，而 IP 协议的处理接口为 `ip_rcv` 函数。
