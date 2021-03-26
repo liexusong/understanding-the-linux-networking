@@ -92,6 +92,10 @@
 
 ## 添加 iptables 规则
 
+上面介绍了 `iptables` 的原理，下面主要介绍怎么向 `iptables` 中添加规则。要向 `iptables` 中添加规则，可以使用 `iptables` 命令，其使用参数如下：
 
+```shell
+iptables [-t 表名] 选项 [链名] [条件] [-j 控制类型]
+```
 
 
