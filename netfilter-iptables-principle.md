@@ -82,6 +82,10 @@
 
 ![iptables-hooks](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/iptables-hooks.png)
 
-上图展示了，数据包从网络进入到内核协议栈的过程中，要经过 `iptables` 规则，拿一个挂载点来看，如下图所示：
+上图展示了，数据包从网络中进入到内核协议栈的过程中，要执行的 `iptables` 规则，如果在执行某条 `iptables` 规则失败后，会直接把数据包丢弃，不会继续执行下面的规则。
+
+拿一个挂载点来看，如下图所示：
 
 ![packet-iptables](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/packet-iptables.png)
+
+也就是说，当数据包从网络中进入到内核协议栈后，在路由判定前会分别执行 `Raw表`、`Mangle表` 和 `NAT表` 中的规则。
