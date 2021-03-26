@@ -39,4 +39,5 @@
 
 `iptables` 是建立在 `Netfilter` 之上的数据包过滤器，也就是说，`iptables` 通过向 `Netfilter` 的挂载点上注册钩子函数来实现对数据包过滤的。
 
+`iptables` 的实现比较复杂，
 
