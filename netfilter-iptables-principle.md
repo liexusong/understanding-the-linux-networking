@@ -37,6 +37,6 @@
 
 ## 什么是 iptables
 
-
+`iptables` 是建立在 `Netfilter` 之上的数据包过滤器，
 
 
