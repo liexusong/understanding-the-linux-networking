@@ -45,8 +45,11 @@
 
 `iptables` 定义了 4 个表：
 
-* Filter表
-* NAT表
-* Mangle表
-* Raw表
+**1. Filter表**
+
+`Filter表` 是 `iptables` 的默认表，因此如果你配置规则时没有指定表，那么就默认使用 `Filter表`，它分别挂载在以下 3 个挂载点上：
+
+`INPUT链`   – 处理来自外部的数据。
+`OUTPUT链`  – 处理向外发送的数据。
+`FORWARD链` – 将数据转发到本机的其他网卡设备上。
 
