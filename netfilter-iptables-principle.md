@@ -75,7 +75,7 @@
 
 `Raw表` 用于决定数据包是否被状态跟踪机制处理，它分别挂载在以下 2 个挂载点上：
 
-* PREROUTING
-* OUTPUT
+* `PRE_ROUTING`
+* `LOCAL_OUT`
 
 
