@@ -63,17 +63,17 @@
 
 **3. Mangle表**
 
-`Mangle表` 用于指定如何处理数据包。它能改变TCP头中的QoS位。Mangle表具有5个内建链：
+`Mangle表` 用于修改数据包的服务类型或TTL，并且可以配置路由实现QOS，它分别挂载在以下 5 个挂载点上：
 
-* PREROUTING
-* OUTPUT
-* FORWARD
-* INPUT
-* POSTROUTING
+* `PRE_ROUTING`
+* `LOCAL_IN`
+* `FORWARD`
+* `LOCAL_OUT`
+* `POST_ROUTING`
 
 **4. Raw表**
 
-`Raw表` 用于处理异常，它具有2个内建链：
+`Raw表` 用于决定数据包是否被状态跟踪机制处理，它分别挂载在以下 2 个挂载点上：
 
 * PREROUTING
 * OUTPUT
