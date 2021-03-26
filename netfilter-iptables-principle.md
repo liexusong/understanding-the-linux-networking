@@ -49,17 +49,17 @@
 
 `Filter表` 用于过滤数据包。是 `iptables` 的默认表，因此如果你配置规则时没有指定表，那么就默认使用 `Filter表`，它分别挂载在以下 3 个挂载点上：
 
-* `LOCAL_IN`：过滤进入内核协议栈的数据包。
-* `LOCAL_OUT`：过滤向外发送的数据包。
-* `FORWARD`：过滤转发的数据包。
+* `LOCAL_IN`
+* `LOCAL_OUT`
+* `FORWARD`
 
 **2. NAT表**
 
 `NAT表` 用于对数据包的网络地址转换(IP、端口)，它分别挂载在以下 3 个挂载点上：
 
-* `PRE_ROUTING`：处理刚到达本机并在路由判定前的数据包。它会转换数据包中的目标IP地址，通常用于DNAT(destination NAT)。
-* `POST_ROUTING`：处理即将离开本机的数据包。它会转换数据包中的源IP地址，通常用于SNAT（source NAT）。
-* `LOCAL_OUT`：处理本机产生的数据包，在路由判定前进行。
+* `PRE_ROUTING`
+* `POST_ROUTING`
+* `LOCAL_OUT`
 
 **3. Mangle表**
 
@@ -81,3 +81,7 @@
 我们通过下图来展示各个表所挂载的挂载点：
 
 ![iptables-hooks](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/iptables-hooks.png)
+
+上图展示了，数据包从网络进入到内核协议栈的过程中，要经过 `iptables` 规则，拿一个挂载点来看：
+
+![]()
