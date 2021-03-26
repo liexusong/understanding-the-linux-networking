@@ -37,11 +37,9 @@
 
 ## 什么是 iptables
 
-`iptables` 是建立在 `Netfilter` 之上的数据包过滤器，也就是说，`iptables` 通过向 `Netfilter` 的挂载点上注册钩子函数来实现对数据包过滤的。
+`iptables` 是建立在 `Netfilter` 之上的数据包过滤器，也就是说，`iptables` 通过向 `Netfilter` 的挂载点上注册钩子函数来实现对数据包过滤的。`iptables` 的实现比较复杂，所以先要慢慢介绍一下它的一些基本概念。
 
-`iptables` 的实现比较复杂，所以先要慢慢介绍一下它的一些基本概念。
-
-### 表
+### 1. 表
 
 从 `iptables` 这个名字可以看出，它一定包含了 `表` 这个概念。没错，`表` 是 `iptables` 的核心概念。
 
