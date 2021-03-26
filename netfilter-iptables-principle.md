@@ -57,10 +57,25 @@
 
 `NAT表` 用于对数据包的网络地址转换(IP、端口)，它分别挂载在以下 3 个挂载点上：
 
-* `PRE_ROUTING`：处理刚到达本机并在路由转发前的数据包。它会转换数据包中的目标IP地址（destination ip address），通常用于DNAT(destination NAT)。
-* `POST_ROUTING`：处理即将离开本机的数据包。它会转换数据包中的源IP地址（source ip address），通常用于SNAT（source NAT）。
-* `LOCAL_OUT`：处理本机产生的数据包。
+* `PRE_ROUTING`：处理刚到达本机并在路由判定前的数据包。它会转换数据包中的目标IP地址，通常用于DNAT(destination NAT)。
+* `POST_ROUTING`：处理即将离开本机的数据包。它会转换数据包中的源IP地址，通常用于SNAT（source NAT）。
+* `LOCAL_OUT`：处理本机产生的数据包，在路由判定前进行。
 
+**3. Mangle表**
 
+`Mangle表` 用于指定如何处理数据包。它能改变TCP头中的QoS位。Mangle表具有5个内建链：
+
+* PREROUTING
+* OUTPUT
+* FORWARD
+* INPUT
+* POSTROUTING
+
+**4. Raw表**
+
+`Raw表` 用于处理异常，它具有2个内建链：
+
+* PREROUTING
+* OUTPUT
 
 
