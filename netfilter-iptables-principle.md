@@ -78,4 +78,6 @@
 * `PRE_ROUTING`
 * `LOCAL_OUT`
 
+我们通过下图来展示各个表所挂载的挂载点：
 
+![iptables-hooks](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/iptables-hooks.png)
