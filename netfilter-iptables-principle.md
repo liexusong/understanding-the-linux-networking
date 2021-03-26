@@ -88,4 +88,6 @@
 
 ![packet-iptables](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/packet-iptables.png)
 
-也就是说，当数据包从网络中进入到内核协议栈后，在路由判定前会分别执行 `Raw表`、`Mangle表` 和 `NAT表` 中的规则。
+也就是说，当数据包从网络中进入到内核协议栈后，在路由判定前会分别执行 `Raw表`、`Mangle表` 和 `NAT表` 中的规则。如果在执行规则时，某一条规则拒绝了数据包，那么数据包便会被丢弃，从而不会继续执行下面的规则。
+
+
