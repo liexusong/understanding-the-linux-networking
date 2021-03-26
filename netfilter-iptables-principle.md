@@ -82,6 +82,6 @@
 
 ![iptables-hooks](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/iptables-hooks.png)
 
-上图展示了，数据包从网络进入到内核协议栈的过程中，要经过 `iptables` 规则，拿一个挂载点来看：
+上图展示了，数据包从网络进入到内核协议栈的过程中，要经过 `iptables` 规则，拿一个挂载点来看，如下图所示：
 
-![]()
+![packet-iptables](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/packet-iptables.png)
