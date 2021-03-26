@@ -28,7 +28,9 @@
 
 * 第二个路由判定根据输出数据包 `IP头部` 的目的 `IP地址` 从路由表中查找对应的路由信息，然后根据路由信息获取下一跳主机（或网关）的 `IP地址`，然后进行数据传输。
 
+通过向这些 `挂载点` 注册钩子函数，就能够对处于不同阶段的数据包进行过滤或者修改操作。钩子函数能够注册多个，所以内核使用链表来保存这些钩子函数，如下图所示：
 
+![netfilter-hooks](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/netfilter-hooks-functions.png)
 
 ## Netfilter挂载点
 
