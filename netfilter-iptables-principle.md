@@ -137,9 +137,9 @@ iptables [选项 参数] ...
 
 ![iptables-command](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/iptables-command.png)
 
-* 第一部分可以通过 `-t` 选项来指定操作的表明。
+* 第一部分可以通过 `-t` 选项来指定操作的表，如 `filter`、`nat`、`mangle` 或 `raw`。
 
-* 第二部分可以通过 `-A`、`-D`、`-I` 或 `-R` 选项来指定操作的链。
+* 第二部分可以通过 `-A`、`-D`、`-I` 或 `-R` 选项来指定操作的链，如 `INPUT`、`OUTPUT`、`FORWARD`、`PREROUTING` 或 `POSTOUTING`。
 
 * 第三部分主要设置规则的匹配条件，如匹配源IP地址或者端口等。
 
