@@ -133,7 +133,7 @@ iptables [选项 参数]
 --sport <端口>：匹配来源端口号。
 ```
 
-`iptables` 规则的选项比较多，一般来说，一条 `iptables` 规则由四个部分组成，如下图所示：
+`iptables` 规则的选项比较多，一般来说，一条 `iptables` 规则主要由四个部分组成，如下图所示：
 
 ![iptables-command](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/iptables-command.png)
 
