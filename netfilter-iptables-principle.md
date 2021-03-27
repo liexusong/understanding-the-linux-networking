@@ -116,7 +116,7 @@ iptables [选项 参数]
 -t <表>：指定要操纵的表；
 -A <链>：向规则链中添加条目；
 -D <链>：从规则链中删除条目；
--i <链>：向规则链中插入条目；
+-I <链>：向规则链中插入条目；
 -R <链>：替换规则链中的条目；
 -L：显示规则链中已有的条目；
 -F：清楚规则链中已有的条目；
@@ -135,5 +135,13 @@ iptables [选项 参数]
 
 一般来说，一条 `iptables` 规则由四个部分组成，如下图所示：
 
-![packet-iptables](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/iptables-command.png)
+![iptables-command](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/iptables-command.png)
+
+* 第一部分可以通过 `-t` 选项来指定操作的表明。
+
+* 第二部分可以通过 `-A`、`-D`、`-I` 或 `-R` 选项来指定操作的链。
+
+* 第三部分主要设置规则的匹配条件，如匹配源IP地址或者端口等。
+
+* 第四部分主要设置规则匹配成功后进行的动作，如接收或拒绝等。
 
