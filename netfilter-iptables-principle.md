@@ -135,3 +135,5 @@ iptables [选项 参数]
 
 一般来说，一条 `iptables` 规则由四个部分组成，如下图所示：
 
+![packet-iptables](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/iptables-command.png)
+
