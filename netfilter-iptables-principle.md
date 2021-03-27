@@ -199,3 +199,15 @@ iptables -A FORWARD -j REJECT
 ```shell
 iptables -I INPUT -s 124.45.0.0/16 -j DROP   # 禁止IP段从123.45.0.1到123.45.255.254访问
 ```
+
+**5. 查看已添加的 iptables 规则**
+
+```shell
+iptables -L -n -v
+```
+
+## 总结
+
+本文主要介绍了 `Netfilter` 与 `iptables` 的原理，并且还介绍了 `iptables` 命令的简单使用。由于 `iptables` 是一个复杂的系统，所以本文不能完整的介绍其所有功能，有兴趣的可以继续查阅其他相关的资料。
+
+下一篇文章我们将会介绍 `Netfilter` 和 `iptables` 的实现过程。
