@@ -34,11 +34,11 @@
 
 如上图所示，当数据包进入本地（`LOCAL_IN` 挂载点）时，就会相继调用 `ipt_hook` 和 `fw_confirm` 钩子函数来处理数据包。另外，钩子函数还有优先级，优先级越小越先执行。正因为挂载点是通过链表来存储钩子函数，所以又被称为 `链`，链的名称如下：
 
-`LOCAL_IN` 挂载点：又称为 `INPUT链`。
-`LOCAL_OUT` 挂载点：又称为 `OUTPUT链`。
-`FORWARD` 挂载点：又称为 `PORWARD链`。
-`PRE_ROUTING` 挂载点：又称为 `PREROUTING链`。
-`POST_ROUTING` 挂载点：又称为 `POSTOUTING链`。
+* `LOCAL_IN` 挂载点：又称为 `INPUT链`。
+* `LOCAL_OUT` 挂载点：又称为 `OUTPUT链`。
+* `FORWARD` 挂载点：又称为 `PORWARD链`。
+* `PRE_ROUTING` 挂载点：又称为 `PREROUTING链`。
+* `POST_ROUTING` 挂载点：又称为 `POSTOUTING链`。
 
 
 ## 什么是 iptables
