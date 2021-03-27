@@ -53,44 +53,44 @@
 
 **1. Filter表**
 
-`Filter表` 用于过滤数据包。是 `iptables` 的默认表，因此如果你配置规则时没有指定表，那么就默认使用 `Filter表`，它分别挂载在以下 3 个挂载点上：
+`Filter表` 用于过滤数据包。是 `iptables` 的默认表，因此如果你配置规则时没有指定表，那么就默认使用 `Filter表`，它分别挂载在以下 3 个链上：
 
-* `LOCAL_IN`
-* `LOCAL_OUT`
-* `FORWARD`
+* `INPUT链`
+* `OUTPUT链`
+* `PORWARD链`
 
 **2. NAT表**
 
-`NAT表` 用于对数据包的网络地址转换(IP、端口)，它分别挂载在以下 3 个挂载点上：
+`NAT表` 用于对数据包的网络地址转换(IP、端口)，它分别挂载在以下 3 个链上：
 
-* `PRE_ROUTING`
-* `POST_ROUTING`
-* `LOCAL_OUT`
+* `PREROUTING链`
+* `POSTOUTING链`
+* `OUTPUT链`
 
 **3. Mangle表**
 
-`Mangle表` 用于修改数据包的服务类型或TTL，并且可以配置路由实现QOS，它分别挂载在以下 5 个挂载点上：
+`Mangle表` 用于修改数据包的服务类型或TTL，并且可以配置路由实现QOS，它分别挂载在以下 5 个链上：
 
-* `PRE_ROUTING`
-* `LOCAL_IN`
-* `FORWARD`
-* `LOCAL_OUT`
-* `POST_ROUTING`
+* `PREROUTING链`
+* `INPUT链`
+* `PORWARD链`
+* `OUTPUT链`
+* `POSTOUTING链`
 
 **4. Raw表**
 
-`Raw表` 用于判定数据包是否被状态跟踪处理，它分别挂载在以下 2 个挂载点上：
+`Raw表` 用于判定数据包是否被状态跟踪处理，它分别挂载在以下 2 个链上：
 
-* `PRE_ROUTING`
-* `LOCAL_OUT`
+* `PREROUTING链`
+* `OUTPUT链`
 
-我们通过下图来展示各个表所挂载的挂载点：
+我们通过下图来展示各个表所挂载的链：
 
 ![iptables-hooks](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/iptables-hooks.png)
 
 上图展示了，数据包从网络中进入到内核协议栈的过程中，要执行的 `iptables` 规则，如果在执行某条 `iptables` 规则失败后，会直接把数据包丢弃，不会继续执行下面的规则。
 
-拿一个挂载点来看，如下图所示：
+拿其中一个链来看，如下图所示：
 
 ![packet-iptables](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/packet-iptables.png)
 
@@ -101,7 +101,7 @@
 上面介绍了 `iptables` 的原理，下面主要介绍怎么向 `iptables` 中添加规则。要向 `iptables` 中添加规则，可以使用 `iptables` 命令，其使用格式如下：
 
 ```shell
-iptables [-t 表名] 选项 [链名] [条件] [-j 控制类型]
+iptables [-t 表名] 选项 [链名] [条件] [-j 动作]
 ```
 
 可选的参数如下：
@@ -109,8 +109,8 @@ iptables [-t 表名] 选项 [链名] [条件] [-j 控制类型]
 ```
 -F 清空规则链。
 -L 查看规则链。
--A 在挂载点的末尾加入新规则。
--I num 在挂载点的头部加入新规则。
+-A 在链的末尾加入新规则。
+-I num 在链的头部加入新规则。
 -D num 删除某一条规则。
 -s 匹配源IP地址，加叹号 "!" 表示除这个IP外。
 -d 匹配目标IP地址。
