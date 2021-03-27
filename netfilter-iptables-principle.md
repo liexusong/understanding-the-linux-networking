@@ -107,7 +107,7 @@
 上面介绍了 `iptables` 的原理，下面主要介绍怎么向 `iptables` 中添加规则。要向 `iptables` 中添加规则，可以使用 `iptables` 命令，其使用格式如下：
 
 ```shell
-iptables [选项 参数]
+iptables [选项 参数] ...
 ```
 
 可选的选项如下：
