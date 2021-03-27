@@ -178,6 +178,12 @@ iptables [选项 参数] ...
 
 **1. 允许本地回环接口(即运行本机访问本机)**
 
+```shell
+iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT  # 不指定表名时, 默认为filter表
 ```
-iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT
+
+**2. 允许访问80端口**
+
+```shell
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 ```
