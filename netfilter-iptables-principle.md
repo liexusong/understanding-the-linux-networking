@@ -187,3 +187,15 @@ iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT  # 不指定表名时, 默
 ```shell
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 ```
+
+**3. 禁止数据转发**
+
+```shell
+iptables -A FORWARD -j REJECT
+```
+
+**4. 禁止IP段访问**
+
+```shell
+iptables -I INPUT -s 124.45.0.0/16 -j DROP   # 禁止IP段从123.45.0.1到123.45.255.254访问
+```
