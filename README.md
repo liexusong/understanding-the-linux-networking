@@ -7,9 +7,9 @@
 *  三、[网络接口设备](https://github.com/liexusong/understanding-the-linux-networking/blob/master/device.md)
 *  四、邻居子系统
 *  五、ARP协议
-*  六、IP协议
-    * 6.1 [IP数据包接收过程](https://github.com/liexusong/understanding-the-linux-networking/blob/master/ip-receive.md)
-*  七、路由子系统
+*  六、路由子系统
+*  七、IP协议
+    * 7.1 [IP数据包接收过程](https://github.com/liexusong/understanding-the-linux-networking/blob/master/ip-receive.md)
 *  八、UDP协议
 *  九、TCP协议
 *  十、Netlink套接字
