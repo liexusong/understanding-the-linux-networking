@@ -260,8 +260,16 @@ static inline int ip_local_deliver_finish(struct sk_buff *skb)
 
 * 调用传输层协议的处理函数处理数据包。
 
-`inet_protos` 数组的定义如下：
+`inet_protos` 数组保存了传输层协议的处理函数，其的定义如下：
 
 ```c
+struct inet_protocol
+{
+    int (*handler)(struct sk_buff *skb, unsigned short len);
+    struct inet_protocol *next;
+    unsigned char protocol;
+    ...
+};
+
 struct inet_protocol *inet_protos[MAX_INET_PROTOS];
 ```
