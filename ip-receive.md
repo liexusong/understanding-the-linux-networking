@@ -235,16 +235,12 @@ static inline int ip_local_deliver_finish(struct sk_buff *skb)
         struct sock *raw_sk = raw_v4_htable[hash];
         struct inet_protocol *ipprot;
         int flag;
-
         ...
         ipprot = (struct inet_protocol *)inet_protos[hash]; // 传输层协议处理函数
         flag = 0;
 
         if (ipprot != NULL) { // 调用传输层协议处理函数处理数据包
-            if (raw_sk == NULL 
-                && ipprot->next == NULL 
-                && ipprot->protocol == iph->protocol) 
-            {
+            if (raw_sk == NULL && ipprot->next == NULL && ipprot->protocol == iph->protocol) {
                 return ipprot->handler(skb, (ntohs(iph->tot_len)-(iph->ihl*4)));
             } else {
                 flag = ip_run_ipprot(skb, iph, ipprot, (raw_sk != NULL));
@@ -255,3 +251,12 @@ static inline int ip_local_deliver_finish(struct sk_buff *skb)
     return 0;
 }
 ```
+
+在上面代码中，我们省略对原始套接字的处理（原始套接字将会在 `原始套接字` 一章中介绍）。`ip_local_deliver_finish` 函数的主要工作如下：
+
+* 通过数据包的 IP 头部获取到上层协议（传输层）类型。
+
+* 根据传输层协议类型从 `inet_protos` 数组中查找对应的处理函数。
+
+* 调用传输层协议的处理函数处理数据包。
+
