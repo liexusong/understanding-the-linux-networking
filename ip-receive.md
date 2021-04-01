@@ -291,4 +291,6 @@ static struct inet_protocol tcp_protocol =
 
 所以，当接收到一个 TCP 协议数据包时，将会调用 `tcp_v4_rcv` 函数处理此数据包。
 
+最后，我以一幅图来展示处理 IP 数据包的函数调用链：
 
+![]()
