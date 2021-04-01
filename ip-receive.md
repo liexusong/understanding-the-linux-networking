@@ -199,3 +199,23 @@ drop:
 
 设置好数据包的路由缓存后，就调用路由缓存的 `input` 方法处理数据包。如果数据包是发送给本机的，那么路由缓存的 `input` 方法将会被设置为 `ip_local_deliver`（由 `ip_route_input` 函数设置）。
 
+所有，如果数据包是发送给本机，那么最终会调用 `ip_local_deliver` 函数处理数据包，我们继续来分析 `ip_local_deliver` 函数：
+
+```c
+int ip_local_deliver(struct sk_buff *skb)
+{
+    struct iphdr *iph = skb->nh.iph;
+
+    // 如果当前数据包是一个IP分片, 那么先对数据包进行分片处理
+    if (iph->frag_off & htons(IP_MF|IP_OFFSET)) {
+        skb = ip_defrag(skb);
+        if (!skb)
+            return 0;
+    }
+
+    // 接着调用 ip_local_deliver_finish 函数处理数据包
+    return NF_HOOK(PF_INET, NF_IP_LOCAL_IN, skb, skb->dev, NULL,
+                   ip_local_deliver_finish);
+}
+```
+
