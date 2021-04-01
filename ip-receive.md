@@ -219,3 +219,6 @@ int ip_local_deliver(struct sk_buff *skb)
 }
 ```
 
+`ip_local_deliver` 函数首先判断数据包是否为一个 IP 分片（IP 分片将在下一篇文章介绍，暂时可以忽略），如果是就调用 `ip_defrag` 函数对数据包进行分片重组处理。如果数据包不是一个分片或者分片重组成功，那么最终调用 `ip_local_deliver_finish` 函数处理数据包：
+
+
