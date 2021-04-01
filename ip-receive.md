@@ -219,6 +219,39 @@ int ip_local_deliver(struct sk_buff *skb)
 }
 ```
 
-`ip_local_deliver` 函数首先判断数据包是否为一个 IP 分片（IP 分片将在下一篇文章介绍，暂时可以忽略），如果是就调用 `ip_defrag` 函数对数据包进行分片重组处理。如果数据包不是一个分片或者分片重组成功，那么最终调用 `ip_local_deliver_finish` 函数处理数据包：
+`ip_local_deliver` 函数首先判断数据包是否为一个 IP 分片（IP 分片将在下一篇文章介绍，暂时可以忽略），如果是就调用 `ip_defrag` 函数对数据包进行分片重组处理。如果数据包不是一个分片或者分片重组成功，那么最终调用 `ip_local_deliver_finish` 函数处理数据包。
 
+`ip_local_deliver_finish` 函数是 IP 层处理数据包的最后一步，我们接着分析 `ip_local_deliver_finish` 函数的实现：
 
+```c
+static inline int ip_local_deliver_finish(struct sk_buff *skb)
+{
+    struct iphdr *iph = skb->nh.iph;         // 获取数据包的IP头部
+    ...
+    skb->h.raw = skb->nh.raw + iph->ihl * 4; // 设置传输层协议头部指针
+
+    {
+        int hash = iph->protocol & (MAX_INET_PROTOS - 1); // 从IP头部获取传输层协议类型
+        struct sock *raw_sk = raw_v4_htable[hash];
+        struct inet_protocol *ipprot;
+        int flag;
+
+        ...
+        ipprot = (struct inet_protocol *)inet_protos[hash]; // 传输层协议处理函数
+        flag = 0;
+
+        if (ipprot != NULL) { // 调用传输层协议处理函数处理数据包
+            if (raw_sk == NULL 
+                && ipprot->next == NULL 
+                && ipprot->protocol == iph->protocol) 
+            {
+                return ipprot->handler(skb, (ntohs(iph->tot_len)-(iph->ihl*4)));
+            } else {
+                flag = ip_run_ipprot(skb, iph, ipprot, (raw_sk != NULL));
+            }
+        }
+        ...
+    }
+    return 0;
+}
+```
