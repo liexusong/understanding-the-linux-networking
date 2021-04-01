@@ -180,14 +180,12 @@ static inline int ip_rcv_finish(struct sk_buff *skb)
     struct net_device *dev = skb->dev;
     struct iphdr *iph = skb->nh.iph;
 
-    if (skb->dst == NULL) {
+    if (skb->dst == NULL) { // 如果数据包的输入路由信息还没设置
         // 根据目标IP地址获取数据包的输入路由信息
         if (ip_route_input(skb, iph->daddr, iph->saddr, iph->tos, dev))
             goto drop;
     }
-
     ...
-
     // 如果数据包是发送给本机的，那么就调用 ip_local_deliver 进行处理
     return skb->dst->input(skb); 
 
@@ -196,4 +194,6 @@ drop:
     return NET_RX_DROP;
 }
 ```
+
+为了简单起见，我们去掉了对 IP 选项的处理。在上面的代码中，如果数据包的输入路由信息还没设置，那么先调用 `ip_route_input` 函数获取数据包的输入路由信息（`ip_route_input` 函数将会在 `路由子系统` 一章介绍，暂时可以忽略这个函数）。获取到数据包的路由信息后，就调用路由缓存的 `input` 方法处理数据包（如果数据包是发送给本机的，那么 `input` 方法将会被设置为 `ip_local_deliver`）。
 
