@@ -278,4 +278,17 @@ struct inet_protocol *inet_protos[MAX_INET_PROTOS];
 
 不同的传输层协议处理函数，会根据其协议类型的值保存到 `inet_protos` 数组中。由于 `inet_protos` 数组只有32个元素，所以保存处理函数时，需要将协议值与32进行取模操作，得到一个 0 ~ 31 的值，然后把处理函数保存到 `inet_protos` 数组对应位置上。如果有多个协议发生冲突，那么就通过 `next` 字段连接起来。
 
-通过调用 `inet_add_protocol` 函数，可以向 `inet_protos` 数组注册传输层协议的处理函数。
+通过调用 `inet_add_protocol` 函数，可以向 `inet_protos` 数组注册传输层协议的处理函数。例如 `TCP协议` 的处理函数定义如下：
+
+```c
+static struct inet_protocol tcp_protocol = 
+{
+    tcp_v4_rcv,         /* TCP handler */
+    IPPROTO_TCP,        /* protocol ID */
+    ...
+};
+```
+
+所以，当接收到一个 TCP 协议数据包时，将会调用 `tcp_v4_rcv` 函数处理此数据包。
+
+
