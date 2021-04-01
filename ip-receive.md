@@ -172,3 +172,28 @@ out:
 
 `ip_rcv` 函数主要对数据包的合法性进行验证，如果数据包是合法的，那么就调用 `ip_rcv_finish` 函数继续对数据包进行处理。
 
+我们继续分析 `ip_rcv_finish` 函数的实现：
+
+```c
+static inline int ip_rcv_finish(struct sk_buff *skb)
+{
+    struct net_device *dev = skb->dev;
+    struct iphdr *iph = skb->nh.iph;
+
+    if (skb->dst == NULL) {
+        // 根据目标IP地址获取数据包的输入路由信息
+        if (ip_route_input(skb, iph->daddr, iph->saddr, iph->tos, dev))
+            goto drop;
+    }
+
+    ...
+
+    // 如果数据包是发送给本机的，那么就调用 ip_local_deliver 进行处理
+    return skb->dst->input(skb); 
+
+drop:
+    kfree_skb(skb);
+    return NET_RX_DROP;
+}
+```
+
