@@ -293,4 +293,5 @@ static struct inet_protocol tcp_protocol =
 
 最后，我以一幅图来展示处理 IP 数据包的函数调用链：
 
-![]()
+![ip-recv-process](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/ip-recv-process.png)
+
