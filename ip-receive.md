@@ -121,4 +121,50 @@ static void net_rx_action(struct softirq_action *h)
 
 现在就非常清晰了，就是根据数据包的网络层协议类型，然后从 `ptype_base` 数组中找到对应的处理接口处理数据包，如 IP 协议的数据包就调用 `ip_rcv` 函数处理。
 
+## 处理IP数据包
 
+通过上面的分析，我们知道当内核接收到一个 IP 数据包后，会调用 `ip_rcv` 函数处理这个数据包，下面我们来分析一下 `ip_rcv` 函数的实现：
+
+```c
+int ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt)
+{
+    struct iphdr *iph = skb->nh.iph;
+
+    // 如果数据包不是发送给本机的, 丢弃数据包
+    if (skb->pkt_type == PACKET_OTHERHOST)
+        goto drop;
+
+    // 如果其他地方也在使用数据包, 复制一份新的数据包
+    if ((skb = skb_share_check(skb, GFP_ATOMIC)) == NULL)
+        goto out;
+
+    // 数据包的长度比IP头部的长度还小，不合法丢弃
+    if (skb->len < sizeof(struct iphdr) || skb->len < (iph->ihl<<2))
+        goto inhdr_error;
+
+    // 判断IP头部是否合法
+    if (iph->ihl < 5                                 // IP头部长度是否合法
+        || iph->version != 4                         // IP协议版本是否合法
+        || ip_fast_csum((u8 *)iph, iph->ihl) != 0)   // IP校验和是否正确
+        goto inhdr_error;
+
+    {
+        __u32 len = ntohs(iph->tot_len);
+
+        // 如果数据包的长度比IP头部的总长度小, 说明数据包不合法, 需要丢弃
+        if (skb->len < len || len < (iph->ihl<<2))
+            goto inhdr_error;
+        __skb_trim(skb, len);
+    }
+
+    // 如果所有验证都通过, 那么调用 ip_rcv_finish 函数继续处理数据包
+    return NF_HOOK(PF_INET, NF_IP_PRE_ROUTING, skb, dev, NULL, ip_rcv_finish);
+
+inhdr_error:
+    IP_INC_STATS_BH(IpInHdrErrors);
+drop:
+    kfree_skb(skb);
+out:
+    return NET_RX_DROP;
+}
+```
