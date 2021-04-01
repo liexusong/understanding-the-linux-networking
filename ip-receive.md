@@ -160,6 +160,7 @@ int ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt)
     // 如果所有验证都通过, 那么调用 ip_rcv_finish 函数继续处理数据包
     return NF_HOOK(PF_INET, NF_IP_PRE_ROUTING, skb, dev, NULL, ip_rcv_finish);
 
+    // 这里是丢弃数据包的处理
 inhdr_error:
     IP_INC_STATS_BH(IpInHdrErrors);
 drop:
@@ -168,3 +169,6 @@ out:
     return NET_RX_DROP;
 }
 ```
+
+`ip_rcv` 函数主要对数据包的合法性进行验证，如果数据包是合法的，那么就调用 `ip_rcv_finish` 函数继续对数据包进行处理。
+
