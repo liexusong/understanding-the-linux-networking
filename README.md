@@ -5,7 +5,7 @@
 *  一、sk_buff 结构
 *  二、BSD层套接字
 *  三、网络接口设备
-*     * 3.1 [Linux 网卡数据收发过程分析](https://github.com/liexusong/understanding-the-linux-networking/blob/master/device.md)
+     * 3.1 [Linux 网卡数据收发过程分析](https://github.com/liexusong/understanding-the-linux-networking/blob/master/device.md)
 *  四、邻居子系统
 *  五、ARP协议
 *  六、路由子系统
