@@ -2,7 +2,7 @@
 
 在 [上一篇文章](https://mp.weixin.qq.com/s/u8PgRcMLbYvOC5oAd_fGPA) 中，我们介绍了网卡接收和发过数据在 Linux 内核中的处理过程，我们先来回顾一下网卡接收和发送数据的过程，如 图1 所示：
 
-![](C:\codes\linux-2.4.0\network-docs\images\network-card.png)
+![network-card](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/network-card.png)
 
 图1 网卡接收和发送数据过程
 
@@ -64,7 +64,7 @@ drop:
 
 `netif_rx` 函数的处理过程如 图2 所示：
 
-![](C:\codes\linux-2.4.0\network-docs\images\interrupt-bottom-half.png)
+![interrupt-bottom-half](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/interrupt-bottom-half.png)
 
 图2 `netif_rx` 函数的处理过程
 
@@ -159,7 +159,7 @@ static void net_rx_action(struct softirq_action *h)
 
 所以，`net_rx_action` 函数主要从待处理队列中获取数据包，然后根据数据包的网络层协议类型，找到相应的处理接口处理数据包。其过程如 图3 所示：
 
-![](C:\codes\linux-2.4.0\network-docs\images\interrupt-bottom-half-2.png)
+![interrupt-bottom-half](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/interrupt-bottom-half-2.png)
 
 从上图可知，`net_rx_action` 函数将数据包交由网络层协议处理接口后就不管了，而网络层协议处理接口接管数据包后，会对数据包进行进一步处理，如判断数据包的合法性（数据包是否损坏、数据包是否发送给本机）。如果数据包是合法的，就会交由传输层协议处理接口处理。
 
