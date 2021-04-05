@@ -6,7 +6,7 @@
 *  二、BSD层套接字
 *  三、网络接口设备
      * 3.1 [Linux 网卡数据收发过程分析](https://github.com/liexusong/understanding-the-linux-networking/blob/master/device.md)
-     * 3.2 [Linux 网络中断下半部处理]()
+     * 3.2 [Linux 网络中断下半部处理](https://github.com/liexusong/understanding-the-linux-networking/blob/master/network-interrupt-bottom-half.md)
 *  四、邻居子系统
 *  五、ARP协议
 *  六、路由子系统
