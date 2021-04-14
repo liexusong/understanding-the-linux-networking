@@ -6,7 +6,7 @@
 
 我们先来回顾一下 Netfilter 的原理，Netfilter 是通过在网络协议栈的不同阶段注册钩子函数来实现对数据包的处理与过滤，如 图1 所示：
 
-![](D:\understanding-the-linux-networking\images\netfilter-hooks.png)
+![](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/netfilter-hooks.png)
 
 在 图1 中，蓝色部分就是 Netfilter 挂载钩子函数的位置，所以 Netfilter 定义了 5 个常量来表示这 5 个位置，如下代码：
 
@@ -26,7 +26,7 @@
 
 前面说过，Netfilter 是通过在网络协议中的不同位置挂载钩子函数来对数据包进行过滤和处理，而且每个挂载点能够挂载多个钩子函数，所以 Netfilter 使用链表结构来存储这些钩子函数，如 图2 所示：
 
-![](D:\understanding-the-linux-networking\images\netfilter-hook-link.png)
+![](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/netfilter-hook-link.png)
 
 如 图2 所示，Netfilter 的每个挂载点都使用一个链表来存储钩子函数列表。在内核中，定义了一个名为 `nf_hooks` 的数组来存储这些链表，如下代码：
 
@@ -127,7 +127,7 @@ int nf_register_hook(struct nf_hook_ops *reg)
 
 插入过程如 图3 所示：
 
-![](D:\understanding-the-linux-networking\images\hook-function-instert.png)
+![](https://raw.githubusercontent.com/liexusong/understanding-the-linux-networking/master/images/hook-function-instert.png)
 
 如 图3 所示，我们要把优先级为 20 的钩子函数插入到 `PRE_ROUTING` 这个链中，而 `PRE_ROUTING` 链已经存在两个钩子函数，一个优先级为 10， 另外一个优先级为 30。
 
