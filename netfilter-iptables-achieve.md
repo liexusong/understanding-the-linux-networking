@@ -1,4 +1,4 @@
-# Netfileter & iptables 实现（一）
+# Netfileter 实现
 
 在《[Netfilter & iptables 原理](https://github.com/liexusong/understanding-the-linux-networking/blob/master/netfilter-iptables-principle.md)》一文中，我们介绍了 `Netfilter` 和 `iptables` 的原理，而本文主要通过源码分析来介绍一下 Netfilter 与 iptables 的实现过程。
 
